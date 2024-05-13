@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: demo_park
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/demo_park?useSSL=false&serverTimezone=America/Sao_paulo"
+    username: docker
+    password: docker
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
