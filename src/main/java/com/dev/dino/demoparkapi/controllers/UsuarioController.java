@@ -2,6 +2,7 @@ package com.dev.dino.demoparkapi.controllers;
 
 import com.dev.dino.demoparkapi.dto.UsuarioCreateDto;
 import com.dev.dino.demoparkapi.dto.UsuarioResponseDto;
+import com.dev.dino.demoparkapi.dto.UsuarioSenhaDto;
 import com.dev.dino.demoparkapi.dto.mapper.UsuarioMapper;
 import com.dev.dino.demoparkapi.entity.Usuario;
 import com.dev.dino.demoparkapi.services.UsuarioService;
@@ -30,14 +31,14 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id) {
         Usuario user = usuarioService.buscarPorId(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UsuarioMapper.toDto(user));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> updatePassword(@PathVariable Long id, @RequestBody Usuario obj) {
-        Usuario user = usuarioService.editarSenha(id, obj.getPassword());
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuarioSenhaDto dto) {
+        Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(),dto.getNovaSenha(), dto.getConfirmaSenha());
+        return ResponseEntity.noContent().build();
     }
 }
