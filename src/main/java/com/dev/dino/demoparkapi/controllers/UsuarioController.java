@@ -7,6 +7,7 @@ import com.dev.dino.demoparkapi.dto.mapper.UsuarioMapper;
 import com.dev.dino.demoparkapi.entity.Usuario;
 import com.dev.dino.demoparkapi.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,9 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));
     }
     @GetMapping()
-    public ResponseEntity<List<Usuario>> getAll() {
+    public ResponseEntity<List<UsuarioResponseDto>> getAll() {
         List<Usuario> list = usuarioService.buscarTodos();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(UsuarioMapper.toListDto(list));
     }
 
     @GetMapping("/{id}")
