@@ -1,8 +1,11 @@
 package com.dev.dino.demoparkapi.services;
 
 import com.dev.dino.demoparkapi.entity.Usuario;
+import com.dev.dino.demoparkapi.entity.exception.EntityNotFoundExceptionSearch;
+import com.dev.dino.demoparkapi.entity.exception.UserNameUniqueViolationException;
 import com.dev.dino.demoparkapi.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +19,16 @@ public class UsuarioService {
 
     @Transactional
     public Usuario create(Usuario obj) {
-        return usuarioRepository.save(obj);
+        try {
+            return usuarioRepository.save(obj);
+        }
+        catch (DataIntegrityViolationException ex){
+            throw new UserNameUniqueViolationException(String.format("Username {%s} já cadastrado", obj.getUsername()));
+        }
     }
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+        return usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundExceptionSearch(String.format("Usuario id=%s não encontrado", id)));
     }
 
     @Transactional
