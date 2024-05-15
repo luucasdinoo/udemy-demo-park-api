@@ -2,6 +2,7 @@ package com.dev.dino.demoparkapi.services;
 
 import com.dev.dino.demoparkapi.entity.Usuario;
 import com.dev.dino.demoparkapi.entity.exception.EntityNotFoundExceptionSearch;
+import com.dev.dino.demoparkapi.entity.exception.PasswordInvalidException;
 import com.dev.dino.demoparkapi.entity.exception.UserNameUniqueViolationException;
 import com.dev.dino.demoparkapi.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +35,11 @@ public class UsuarioService {
     @Transactional
     public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
         if (!novaSenha.equals(confirmaSenha))
-            throw new RuntimeException("Nova senha não confere com corfirmação de senha");
+            throw new PasswordInvalidException("Nova senha não confere com corfirmação de senha");
 
         Usuario user = buscarPorId(id);
         if (!user.getPassword().equals(senhaAtual))
-            throw new RuntimeException("Sua senha não confere");
+            throw new PasswordInvalidException("Sua senha não confere");
 
         user.setPassword(novaSenha);
         return user;
