@@ -57,7 +57,8 @@ public class UsuarioController {
     @Operation(summary = "Atualizar senha", description = "Recurso para atualizar senha por um id", responses = {
             @ApiResponse(responseCode = "204",description = "Senha atualizada com sucesso",content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "400",description = "Senha não confere", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-            @ApiResponse(responseCode = "404",description = "Recurso não encontrato", content = @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class)))})
+            @ApiResponse(responseCode = "404",description = "Recurso não encontrato", content = @Content(mediaType = "application/json",schema = @Schema(implementation = ErrorMessage.class))),
+            @ApiResponse(responseCode = "422",description = "Campos inválidos ou mal formatados", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))})
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody UsuarioSenhaDto dto) {
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(),dto.getNovaSenha(), dto.getConfirmaSenha());
