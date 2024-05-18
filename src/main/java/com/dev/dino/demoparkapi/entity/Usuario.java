@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) // Processo de auditoria
 public class Usuario implements Serializable {
 
 
@@ -30,17 +30,17 @@ public class Usuario implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false,length = 25)
     private Role role = Role.ROLE_CLIENTE;
-    @CreatedDate
+    @CreatedDate // Auditoria
     @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
-    @LastModifiedDate
+    @LastModifiedDate // Auditoria
     @Column(name = "data_atualização")
     private LocalDateTime dataAtualizacao;
-    @CreatedBy
+    @CreatedBy // Auditoria
     @Column(name = "criado_por")
     private String criadoPor;
     @Column(name = "atualizado_por")
-    @LastModifiedBy
+    @LastModifiedBy // Auditoria
     private String atualizadoPor;
 
     public enum Role{

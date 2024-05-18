@@ -8,12 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+// Classe para o service de UserDetails
 @RequiredArgsConstructor
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
     private final UsuarioService usuarioService;
 
+    // Método público para: Fazer uma consulta por username/id > retornar um novo objeto UserDatails > Spring conferir se a senha confere com a senha armazenada no BD
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -21,6 +23,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         return new JwtUserDetails(usuario);
     }
 
+    // Método públic para: Gerar o token JWT
     public JwtToken getTokenAuthenticated(String username){
         Usuario.Role role = usuarioService.buscarRolePorUsername(username);
         return JwtUtils.createToken(username, role.name().substring("ROLE_".length()));

@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
+// Classe de auditoria
 @EnableJpaAuditing
 @Configuration
 public class SpringJpaAuditingConfig implements AuditorAware<String> {
@@ -16,9 +17,9 @@ public class SpringJpaAuditingConfig implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated())
-            return Optional.of(authentication.getName());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Retorna um objeto de autenticação
+        if (authentication != null && authentication.isAuthenticated()) // Verificar se o objeto de autenticação é != de null e está autenticado.
+            return Optional.of(authentication.getName()); // Retorna o username do usuario autenticado
 
         return null;
     }

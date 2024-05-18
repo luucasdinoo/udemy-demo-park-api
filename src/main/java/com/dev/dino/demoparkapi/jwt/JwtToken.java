@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// Objeto de resposta (token)
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class JwtToken {

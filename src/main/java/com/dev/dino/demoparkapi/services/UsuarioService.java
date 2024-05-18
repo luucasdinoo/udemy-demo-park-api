@@ -23,7 +23,7 @@ public class UsuarioService {
     @Transactional
     public Usuario create(Usuario obj) {
         try {
-            obj.setPassword(passwordEncoder.encode(obj.getPassword()));
+            obj.setPassword(passwordEncoder.encode(obj.getPassword())); // Criptografar Senha
             return usuarioRepository.save(obj);
         }
         catch (DataIntegrityViolationException ex){
@@ -41,10 +41,10 @@ public class UsuarioService {
             throw new PasswordInvalidException("Nova senha não confere com corfirmação de senha");
 
         Usuario user = buscarPorId(id);
-        if (!passwordEncoder.matches(senhaAtual, user.getPassword()))
+        if (!passwordEncoder.matches(senhaAtual, user.getPassword())) // Comparação entre as duas senhas criptografadas
             throw new PasswordInvalidException("Sua senha não confere");
 
-        user.setPassword(passwordEncoder.encode(novaSenha));
+        user.setPassword(passwordEncoder.encode(novaSenha)); // Criptografar Senha
         return user;
     }
     @Transactional(readOnly = true)

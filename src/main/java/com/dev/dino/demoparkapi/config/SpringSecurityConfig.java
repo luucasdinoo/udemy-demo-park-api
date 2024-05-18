@@ -19,7 +19,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @EnableMethodSecurity
 @Configuration
-public class SpringConfigSecurity {
+// Classe de configuração do SpringSecurity
+public class SpringSecurityConfig {
 
     private static final String[] DOCUMENTATION_OPENAPI = {
             "/docs/index.html",
@@ -31,31 +32,33 @@ public class SpringConfigSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http.csrf(csrf -> csrf.disable()) // Desabilitar alguns recursos
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
-                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(auth -> auth // Permissões de acesso
                         .requestMatchers(HttpMethod.POST,"api/v1/usuarios").permitAll()
                         .requestMatchers(HttpMethod.POST,"api/v1/auth").permitAll()
                         .requestMatchers(DOCUMENTATION_OPENAPI).permitAll()
-                        .anyRequest().authenticated()
-                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                        .anyRequest().authenticated() // Qualquer solicitação irá precisar de autenticação
+                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Estabelece a política de seção de uma API rest (STATELESS)
+                ).addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class) // Filtros, ordem de execução
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
-                .build();
+                .build(); // FIM
     }
 
-
+    // Coloca o filtro de autenticação sob o gerenciamento do Spring
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter(){
         return new JwtAuthorizationFilter();
     }
 
+    // Tipo da criptografia das senhas
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // Gerenciamento de autenticação
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
