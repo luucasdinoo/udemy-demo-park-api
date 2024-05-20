@@ -9,6 +9,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.io.IOException;
 @Slf4j
+// Resposta com status 401 , Não autenticado
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 

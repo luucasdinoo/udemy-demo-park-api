@@ -42,7 +42,7 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated() // Qualquer solicitação irá precisar de autenticação
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Estabelece a política de seção de uma API rest (STATELESS)
                 ).addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class) // Filtros, ordem de execução
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint())) // Exception para usuario não logado, status 401
                 .build(); // FIM
     }
 
