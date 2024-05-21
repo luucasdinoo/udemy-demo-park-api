@@ -1,5 +1,6 @@
 package com.dev.dino.demoparkapi.exception;
 
+import com.dev.dino.demoparkapi.entity.exception.CpfUniqueViolationException;
 import com.dev.dino.demoparkapi.entity.exception.EntityNotFoundExceptionSearch;
 import com.dev.dino.demoparkapi.entity.exception.PasswordInvalidException;
 import com.dev.dino.demoparkapi.entity.exception.UserNameUniqueViolationException;
@@ -28,8 +29,8 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request ,HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s) inválidos", result));
     }
 
-    @ExceptionHandler(UserNameUniqueViolationException.class)
-    public ResponseEntity<ErrorMessage> userNameUniqueViolationException(RuntimeException ex, HttpServletRequest request) {
+    @ExceptionHandler({UserNameUniqueViolationException.class, CpfUniqueViolationException.class})
+    public ResponseEntity<ErrorMessage> uniqueViolationException(RuntimeException ex, HttpServletRequest request) {
 
         log.error("Api Error - ", ex);
         return ResponseEntity

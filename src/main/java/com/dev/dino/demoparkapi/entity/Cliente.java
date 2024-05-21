@@ -1,8 +1,6 @@
 package com.dev.dino.demoparkapi.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,7 +14,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "clientes")
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) // Auditoria
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Cliente implements Serializable {
 
