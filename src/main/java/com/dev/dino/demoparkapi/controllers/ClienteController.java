@@ -2,10 +2,13 @@ package com.dev.dino.demoparkapi.controllers;
 
 import com.dev.dino.demoparkapi.dto.ClienteCreateDto;
 import com.dev.dino.demoparkapi.dto.ClienteResponseDto;
+import com.dev.dino.demoparkapi.dto.PageableDto;
 import com.dev.dino.demoparkapi.dto.mapper.ClienteMapper;
+import com.dev.dino.demoparkapi.dto.mapper.PageableMapper;
 import com.dev.dino.demoparkapi.entity.Cliente;
 import com.dev.dino.demoparkapi.exception.ErrorMessage;
 import com.dev.dino.demoparkapi.jwt.JwtUserDetails;
+import com.dev.dino.demoparkapi.repositories.projection.ClienteProjection;
 import com.dev.dino.demoparkapi.services.ClienteService;
 import com.dev.dino.demoparkapi.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +19,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -68,6 +73,13 @@ public class ClienteController {
     public ResponseEntity<ClienteResponseDto> getById(@PathVariable Long id){
         Cliente cliente = clienteService.buscarPorId(id);
         return ResponseEntity.ok(ClienteMapper.toDto(cliente));
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<PageableDto> getAll(Pageable pageable){
+        Page<ClienteProjection> clientes = clienteService.buscarTodos(pageable);
+        return ResponseEntity.ok(PageableMapper.toDto(clientes));
     }
 
 }
