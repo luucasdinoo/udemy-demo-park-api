@@ -1,0 +1,20 @@
+package com.dev.dino.demoparkapi.dto.mapper;
+
+import com.dev.dino.demoparkapi.dto.EstacionamentoCreateDto;
+import com.dev.dino.demoparkapi.dto.EstacionamentoResponseDto;
+import com.dev.dino.demoparkapi.entity.ClienteVaga;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class ClienteVagaMapper {
+
+    public static ClienteVaga toClienteVaga(EstacionamentoCreateDto dto){
+        return new ModelMapper().map(dto, ClienteVaga.class);
+    }
+
+    public static EstacionamentoResponseDto toDto(ClienteVaga clienteVaga){
+        return new ModelMapper().map(clienteVaga, EstacionamentoResponseDto.class);
+    }
+}

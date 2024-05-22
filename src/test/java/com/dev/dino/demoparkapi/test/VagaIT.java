@@ -99,4 +99,31 @@ public class VagaIT {
                 .jsonPath("method").isEqualTo("GET")
                 .jsonPath("path").isEqualTo("/api/v1/vagas/A-10");
     }
+
+    @Test
+    public void buscarVaga_ComUsuarioSemPermissaoDeAcesso_RetornarErrorMessageStatus403(){
+        testClient.get()
+                .uri("/api/v1/vagas/{codigo}", "A-04")
+                .headers(JwtAuthentication.getHearderAuthorization(testClient, "Babi@gmail.com", "123456"))
+                .exchange()
+                .expectStatus().isForbidden()
+                .expectBody()
+                .jsonPath("status").isEqualTo(403)
+                .jsonPath("method").isEqualTo("GET")
+                .jsonPath("path").isEqualTo("/api/v1/vagas/A-04");
+    }
+
+    @Test
+    public void criarVaga_ComUsuarioSemPermissaoDeAcesso_RetornarErrorMessageStatus403(){
+        testClient.post()
+                .uri("/api/v1/vagas")
+                .headers(JwtAuthentication.getHearderAuthorization(testClient, "Babi@gmail.com", "123456"))
+                .bodyValue(new VagaCreateDto("A-05", "OCUPADA"))
+                .exchange()
+                .expectStatus().isForbidden()
+                .expectBody()
+                .jsonPath("status").isEqualTo(403)
+                .jsonPath("method").isEqualTo("POST")
+                .jsonPath("path").isEqualTo("/api/v1/vagas");
+    }
 }
