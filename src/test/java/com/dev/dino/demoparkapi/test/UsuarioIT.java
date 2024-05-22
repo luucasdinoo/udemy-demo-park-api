@@ -1,5 +1,6 @@
-package com.dev.dino.demoparkapi;
+package com.dev.dino.demoparkapi.test;
 
+import com.dev.dino.demoparkapi.JwtAuthentication;
 import com.dev.dino.demoparkapi.dto.UsuarioCreateDto;
 import com.dev.dino.demoparkapi.dto.UsuarioResponseDto;
 import com.dev.dino.demoparkapi.dto.UsuarioSenhaDto;

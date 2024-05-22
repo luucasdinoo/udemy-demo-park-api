@@ -1,5 +1,6 @@
-package com.dev.dino.demoparkapi;
+package com.dev.dino.demoparkapi.test;
 
+import com.dev.dino.demoparkapi.JwtAuthentication;
 import com.dev.dino.demoparkapi.dto.ClienteCreateDto;
 import com.dev.dino.demoparkapi.dto.ClienteResponseDto;
 import com.dev.dino.demoparkapi.dto.PageableDto;

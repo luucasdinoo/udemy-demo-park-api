@@ -129,5 +129,4 @@ public class ClienteController {
         Cliente cliente = clienteService.buscarPorUsuarioId(userDetails.getId());
         return ResponseEntity.ok(ClienteMapper.toDto(cliente));
     }
-
 }

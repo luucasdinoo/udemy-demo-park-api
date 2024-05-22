@@ -1,4 +1,4 @@
-package com.dev.dino.demoparkapi;
+package com.dev.dino.demoparkapi.test;
 
 import com.dev.dino.demoparkapi.dto.UsuarioLoginDto;
 import com.dev.dino.demoparkapi.exception.ErrorMessage;
