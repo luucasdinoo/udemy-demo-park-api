@@ -44,4 +44,9 @@ public class ClienteService {
     public Cliente buscarPorUsuarioId(Long id) {
         return clienteRepository.findByUsuarioId(id);
     }
+
+    @Transactional(readOnly = true)
+    public Cliente buscarPorCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf).orElseThrow(()-> new EntityNotFoundExceptionSearch(String.format("Cliente com CPF '%s' não encontrado", cpf)));
+    }
 }
