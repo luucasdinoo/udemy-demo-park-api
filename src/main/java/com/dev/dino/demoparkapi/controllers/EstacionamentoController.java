@@ -5,6 +5,7 @@ import com.dev.dino.demoparkapi.dto.EstacionamentoResponseDto;
 import com.dev.dino.demoparkapi.dto.mapper.ClienteVagaMapper;
 import com.dev.dino.demoparkapi.entity.ClienteVaga;
 import com.dev.dino.demoparkapi.exception.ErrorMessage;
+import com.dev.dino.demoparkapi.services.ClienteVagaService;
 import com.dev.dino.demoparkapi.services.EstacionamentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -18,21 +19,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
 @Tag(name = "Estacionamentos", description = "Operações de registro de entrada e saida de um veiculo do estacionamento.")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/estacionamentos")
-@RequiredArgsConstructor
 public class EstacionamentoController {
 
     private final EstacionamentoService estacionamentoService;
+    private final ClienteVagaService clienteVagaService;
 
     @Operation(summary = "Operação de check-in", description = "Recurso para dar entrada de um veículo no estacionamento. " +
             "Requisição exige uso de um bearer token. Acesso restrito a Role='ADMIN'",
@@ -66,5 +65,13 @@ public class EstacionamentoController {
                 .buildAndExpand(clienteVaga.getRecibo())
                 .toUri();
         return ResponseEntity.created(location).body(responseDto);
+    }
+
+    @GetMapping("/check-in/{recibo}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENTE')")
+    public ResponseEntity<EstacionamentoResponseDto> getByRecibo(@PathVariable String recibo){
+        ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
+        EstacionamentoResponseDto dto = ClienteVagaMapper.toDto(clienteVaga);
+        return ResponseEntity.ok(dto);
     }
 }
