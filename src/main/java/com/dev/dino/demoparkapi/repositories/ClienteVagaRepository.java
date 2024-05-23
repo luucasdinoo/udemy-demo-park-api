@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ClienteVagaRepository extends JpaRepository<ClienteVaga, Long> {
 
     Optional<ClienteVaga> findByReciboAndDatSaidaIsNull(String recibo);
+
+    long countByClienteCpfAndDatSaidaIsNotNull(String cpf);
 }

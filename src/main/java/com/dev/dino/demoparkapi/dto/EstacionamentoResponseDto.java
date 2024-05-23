@@ -20,7 +20,7 @@ public class EstacionamentoResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataEntrada;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime dataSaida;
+    private LocalDateTime datSaida;
     private String vagaCodigo;
     private BigDecimal valor;
     private BigDecimal desconto;
