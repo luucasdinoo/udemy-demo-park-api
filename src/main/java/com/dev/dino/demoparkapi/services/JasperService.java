@@ -28,7 +28,7 @@ public class JasperService {
 
     private Map<String, Object> params = new HashMap<>();
 
-    private static final String JASPER_DIRETORIO = "classpath:reports/"; // classpath = pasta resources do
+    private static final String JASPER_DIRETORIO = "classpath:reports/"; // classpath = pasta resources do spring
 
     public void addParams(String key, Object value) {
         this.params.put("IMAGEM_DIRETORIO", JASPER_DIRETORIO);

@@ -208,7 +208,7 @@ public class EstacionamentoController {
 
         byte[] bytes = jasperService.gerarPdf();
         response.setContentType(MediaType.APPLICATION_PDF_VALUE);
-        response.setHeader("Content-Disposition", "inline; filename=" + System.currentTimeMillis() + ".pdf");
+        response.setHeader("Content-disposition", "inline; filename=" + System.currentTimeMillis() + ".pdf");
         response.getOutputStream().write(bytes);
 
         return ResponseEntity.ok().build();
